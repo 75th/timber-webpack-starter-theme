@@ -88,7 +88,7 @@ module.exports = {
 
 function getEntry() {
 	const entry = {};
-	entry.main = [PATHS.src("js", "THEMENAME.js"), PATHS.src("css", "THEMENAME.scss")];
+	entry.main = [PATHS.src("js", "THEME-NAME.js"), PATHS.src("css", "THEME-NAME.scss")];
 	if (ENV === "development") entry.main.push("webpack-hot-middleware/client");
 	return entry;
 }

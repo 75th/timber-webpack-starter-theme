@@ -1,35 +1,27 @@
+# Timber/Webpack starter WordPress theme
 
-# The Timber Starter Theme
+A Timber theme with Webpack SCSS compilation, JS bundling, and Browsersync preview, plus some default templates and functions for an Advanced Custom Fields Flexible Content-based CMS config.
 
-The "_s" for Timber: a dead-simple theme that you can build from. The primary purpose of this theme is to provide a file structure rather than a framework for markup or styles. Configure your Sass, scripts, and task runners however you would like!
+## Installation and usage
 
-[![Build Status](https://travis-ci.org/timber/starter-theme.svg)](https://travis-ci.org/timber/starter-theme)
+- Set up a WordPress install with the Timber plugin
+- If using ACF, [set up local JSON](https://www.advancedcustomfields.com/resources/local-json/).
+- Download a backup and create a local dev site
+- Clone this repo's contents into `wp-content/themes/[your-desired-theme-name]`
+- Delete the `.git` folder
+- Do two bulk find-and-replaces in the repo (in file names *and* contents) 
+    + Replace `THEME-NAME` with your lowercase theme name, using hyphens for spaces.
+    + Replace `THEME_NAME` the same way, using underscores for spaces.
+- Rename `example.env.config.js` to `env.config.js` and change `PROXY_TARGET` to your local dev site's URL
+- Create your new theme's git repo with `git init`
+- `npm run start` to develop locally
+- `npm run build` to generate the final theme
 
-## Installing the Theme
+The actual, usable WordPress theme is the contents of the `build` folder. Upload it to your live site.
 
-Install this theme as you would any other, and be sure the Timber plugin is activated. But hey, let's break it down into some bullets:
+Be careful not to delete or overwrite the `acf-json` folder on the server; this folder should be manually downloaded to the root of your local repo whenever you change ACF configuration, but it should never exist in the `build` folder. The live version of this folder is canonical.
 
-1. Make sure you have installed the plugin for the [Timber Library](https://wordpress.org/plugins/timber-library/) (and Advanced Custom Fields - they [play quite nicely](https://timber.github.io/docs/guides/acf-cookbook/#nav) together). 
-2. Download the zip for this theme (or clone it) and move it to `wp-content/themes` in your WordPress installation. 
-3. Rename the folder to something that makes sense for your website (generally no spaces and all lowercase). You could keep the name `timber-starter-theme` but the point of a starter theme is to make it your own!
-4. Activate the theme in Appearance >  Themes.
-5. Do your thing! And read [the docs](https://github.com/jarednova/timber/wiki).
+## TODO
 
-## What's here?
-
-`static/` is where you can keep your static front-end scripts, styles, or images. In other words, your Sass files, JS files, fonts, and SVGs would live here.
-
-`templates/` contains all of your Twig templates. These pretty much correspond 1 to 1 with the PHP files that respond to the WordPress template hierarchy. At the end of each PHP template, you'll notice a `Timber::render()` function whose first parameter is the Twig file where that data (or `$context`) will be used. Just an FYI.
-
-`bin/` and `tests/` ... basically don't worry about (or remove) these unless you know what they are and want to.
-
-## Other Resources
-
-The [main Timber Wiki](https://github.com/jarednova/timber/wiki) is super great, so reference those often. Also, check out these articles and projects for more info:
-
-* [This branch](https://github.com/laras126/timber-starter-theme/tree/tackle-box) of the starter theme has some more example code with ACF and a slightly different set up.
-* [Twig for Timber Cheatsheet](http://notlaura.com/the-twig-for-timber-cheatsheet/)
-* [Timber and Twig Reignited My Love for WordPress](https://css-tricks.com/timber-and-twig-reignited-my-love-for-wordpress/) on CSS-Tricks
-* [A real live Timber theme](https://github.com/laras126/yuling-theme).
-* [Timber Video Tutorials](http://timber.github.io/timber/#video-tutorials) and [an incomplete set of screencasts](https://www.youtube.com/playlist?list=PLuIlodXmVQ6pkqWyR6mtQ5gQZ6BrnuFx-) for building a Timber theme from scratch.
-
+- Document ACF Flexible Content usage and the `fc-handler.twig` file
+- Document the stuff in `functions.php`

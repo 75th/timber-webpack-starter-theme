@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  THEME_NAME: 'rival',
+  THEME_NAME: 'THEME-NAME',
   PROXY_TARGET: 'rival.sft',
   HOST: 'localhost',
   PORT: 3000,

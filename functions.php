@@ -52,18 +52,18 @@ class StarterSite extends TimberSite {
 
 new StarterSite();
 
-function _THEMENAME_assets() {
-	wp_enqueue_script('THEMENAME-js', get_stylesheet_directory_uri() . '/compiled/js/main.js');
+function _THEME_NAME_assets() {
+	wp_enqueue_script('THEME-NAME-js', get_stylesheet_directory_uri() . '/compiled/js/main.js');
 }
-add_action( 'wp_enqueue_scripts', '_THEMENAME_assets' );
+add_action( 'wp_enqueue_scripts', '_THEME_NAME_assets' );
 
-function _THEMENAME_file_types($mimes = array()) {
+function _THEME_NAME_file_types($mimes = array()) {
 	$mimes['svg'] = 'image/svg+xml';
 	return $mimes;
 }
-add_action('upload_mimes', '_THEMENAME_file_types');
+add_action('upload_mimes', '_THEME_NAME_file_types');
 
-function _THEMENAME_copyright_years($starting_year) {
+function _THEME_NAME_copyright_years($starting_year) {
 	if(!is_numeric($starting_year)) {
 		return false;
 	}
@@ -79,7 +79,7 @@ function _THEMENAME_copyright_years($starting_year) {
 	return $output;
 }
 
-function _THEMENAME_prepare_acf_json($groupID, $actuallyPrepare = true) {
+function _THEME_NAME_prepare_acf_json($groupID, $actuallyPrepare = true) {
 	if($actuallyPrepare) {
 		return json_decode(file_get_contents(get_stylesheet_directory() . '/acf-json/' . $groupID . '.json'), true);
 	}
@@ -87,7 +87,7 @@ function _THEMENAME_prepare_acf_json($groupID, $actuallyPrepare = true) {
 	return $groupID;
 }
 
-function _THEMENAME_get_field_group_data($target = false, $excludeTarget = false, $prepareJSON = true) {
+function _THEME_NAME_get_field_group_data($target = false, $excludeTarget = false, $prepareJSON = true) {
 	$ids = array(
 	//	'shared fields' => 'group_5b1aa8e4ec4ca',
 	//	'generic layouts' => 'group_5b05a0dca0937',
@@ -102,7 +102,7 @@ function _THEMENAME_get_field_group_data($target = false, $excludeTarget = false
 		}
 
 		if(!$excludeTarget) {
-			return _THEMENAME_prepare_acf_json($ids[$target], $prepareJSON );
+			return _THEME_NAME_prepare_acf_json($ids[$target], $prepareJSON );
 		}
 
 		unset($ids[$target]);
@@ -110,13 +110,13 @@ function _THEMENAME_get_field_group_data($target = false, $excludeTarget = false
 
 	return array_map(
 		function($el) use ($prepareJSON) {
-			return _THEMENAME_prepare_acf_json($el, $prepareJSON);
+			return _THEME_NAME_prepare_acf_json($el, $prepareJSON);
 		},
 		array_values($ids)
 	);
 }
 
-function _THEMENAME_wrap_if($text, $condition, $prefix, $suffix) {
+function _THEME_NAME_wrap_if($text, $condition, $prefix, $suffix) {
 	if($condition) {
 		return $prefix . $text . $suffix;
 	}
@@ -124,7 +124,7 @@ function _THEMENAME_wrap_if($text, $condition, $prefix, $suffix) {
 	return $text;
 }
 
-function _THEMENAME_get_latest_blog_posts($num = 1) {
+function _THEME_NAME_get_latest_blog_posts($num = 1) {
 	$posts = Timber::get_posts(
 		array(
 			'post_type' => 'post',
@@ -141,7 +141,7 @@ function _THEMENAME_get_latest_blog_posts($num = 1) {
 	return $posts;
 }
 
-function _THEMENAME_render_menu_recursively($menu_items) {
+function _THEME_NAME_render_menu_recursively($menu_items) {
 	$o = '<ul>';
 
 	foreach($menu_items as $item) {
@@ -149,7 +149,7 @@ function _THEMENAME_render_menu_recursively($menu_items) {
 
 		$test_regexes = array(
 			'/\.sft$/', // FIXME! Add your local development TLD below this, or change this one if Lanny Heidbreder isn't involved!
-		//	'/THEMENAMEga\.org$/', // FIXME! Make this the live site domain!
+		//	'/example\.com$/', // FIXME! Make this the live site domain!
 			'/hardypress\.com$/',
 			'/^localhost/',
 		);
@@ -177,7 +177,7 @@ function _THEMENAME_render_menu_recursively($menu_items) {
 			$item->title
 		);
 		if(!empty($item->children)) {
-			$o .= _THEMENAME_render_menu_recursively($item->children);
+			$o .= _THEME_NAME_render_menu_recursively($item->children);
 		}
 		$o .= '</li>';
 	}
@@ -193,7 +193,7 @@ function _THEMENAME_render_menu_recursively($menu_items) {
  *
  * @return [type]
  */
-function _THEMENAME_layout_classes($layout, $get_array = FALSE) {
+function _THEME_NAME_layout_classes($layout, $get_array = FALSE) {
 	$classes = array(str_replace('_' , '-', $layout['acf_fc_layout']));
 
 	switch($layout['acf_fc_layout']) {
@@ -218,7 +218,7 @@ function _THEMENAME_layout_classes($layout, $get_array = FALSE) {
  *
  * @return [type]
  */
-function _THEMENAME_load_custom_section($section) {
+function _THEME_NAME_load_custom_section($section) {
 	$context = array(
 		'layout' => array(
 			'acf_fc_layout' => $section,
@@ -231,16 +231,16 @@ function _THEMENAME_load_custom_section($section) {
 add_filter( 'timber/twig', function( \Twig_Environment $twig ) {
     $twig->addFilter( new Twig_SimpleFilter('wrap_if', '_THEMEANME_wrap_if') );
     $twig->addFilter( new Twig_SimpleFilter('unique', 'array_unique') );
-    $twig->addFilter( new Twig_SimpleFilter('render_menu', '_THEMENAME_render_menu_recursively') );
-    $twig->addFilter( new Twig_SimpleFilter('classes', '_THEMENAME_layout_classes') );
-    $twig->addFunction( new Twig_SimpleFunction('get_latest_blog_posts', '_THEMENAME_get_latest_blog_posts') );
-    $twig->addFunction( new Twig_SimpleFunction('section', '_THEMENAME_load_custom_section') );
+    $twig->addFilter( new Twig_SimpleFilter('render_menu', '_THEME_NAME_render_menu_recursively') );
+    $twig->addFilter( new Twig_SimpleFilter('classes', '_THEME_NAME_layout_classes') );
+    $twig->addFunction( new Twig_SimpleFunction('get_latest_blog_posts', '_THEME_NAME_get_latest_blog_posts') );
+    $twig->addFunction( new Twig_SimpleFunction('section', '_THEME_NAME_load_custom_section') );
     return $twig;
 } );
 
-function THEMENAME_duplicate_post_as_draft() {
+function THEME_NAME_duplicate_post_as_draft() {
 	global $wpdb;
-	if (! ( isset( $_GET['post']) || isset( $_POST['post'])  || ( isset($_REQUEST['action']) && 'THEMENAME_duplicate_post_as_draft' == $_REQUEST['action'] ) ) ) {
+	if (! ( isset( $_GET['post']) || isset( $_POST['post'])  || ( isset($_REQUEST['action']) && 'THEME_NAME_duplicate_post_as_draft' == $_REQUEST['action'] ) ) ) {
 		wp_die('No post to duplicate has been supplied!');
 	}
 
@@ -330,19 +330,19 @@ function THEMENAME_duplicate_post_as_draft() {
 		wp_die('Post creation failed, could not find original post: ' . $post_id);
 	}
 }
-add_action( 'admin_action_THEMENAME_duplicate_post_as_draft', 'THEMENAME_duplicate_post_as_draft' );
+add_action( 'admin_action_THEME_NAME_duplicate_post_as_draft', 'THEME_NAME_duplicate_post_as_draft' );
 
 /*
  * Add the duplicate link to action list for post_row_actions
  */
-function THEMENAME_duplicate_post_link( $actions, $post ) {
+function THEME_NAME_duplicate_post_link( $actions, $post ) {
 	if (current_user_can('edit_posts')) {
-		$actions['duplicate'] = '<a href="' . wp_nonce_url('admin.php?action=THEMENAME_duplicate_post_as_draft&post=' . $post->ID, basename(__FILE__), 'duplicate_nonce' ) . '" title="Duplicate this item" rel="permalink">Duplicate</a>';
+		$actions['duplicate'] = '<a href="' . wp_nonce_url('admin.php?action=THEME_NAME_duplicate_post_as_draft&post=' . $post->ID, basename(__FILE__), 'duplicate_nonce' ) . '" title="Duplicate this item" rel="permalink">Duplicate</a>';
 	}
 	return $actions;
 }
 
-add_filter( 'page_row_actions', 'THEMENAME_duplicate_post_link', 10, 2 );
-add_filter( 'post_row_actions', 'THEMENAME_duplicate_post_link', 10, 2 );
+add_filter( 'page_row_actions', 'THEME_NAME_duplicate_post_link', 10, 2 );
+add_filter( 'post_row_actions', 'THEME_NAME_duplicate_post_link', 10, 2 );
 
 add_post_type_support( 'page', 'excerpt' );
