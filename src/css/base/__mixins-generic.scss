@@ -1,0 +1,336 @@
+// ---------------------------------------------------------------------
+// Set an element to be constrained to every breakpoint's maximum width.
+// ---------------------------------------------------------------------
+@mixin frame($margin: 0px) {
+	$gutter: $margin * 2;
+	width: $desktop-small-min - $gutter;
+	margin: auto;
+
+	@media only screen and (min-width: $desktop-large-min) {
+		width: $desktop-large-min - $gutter;
+	}
+
+	@media only screen and (max-width: $tablet-max) and (min-width: $tablet-min) {
+		width: $tablet-min - $gutter;
+	}
+
+	@media only screen and (max-width: $mobile-large-max) {
+		@include mobile-full;
+	}
+}
+
+
+// ------------------------------------------------------
+// Restore previously `frame`d elements to 100% width.
+// ------------------------------------------------------
+@mixin frame-cancel {
+	@include clearer-cancel;
+	width: 100%;
+	margin: 0px;
+
+	// FIXME: Do I need media queries here? I had them on eVersity, but I don't think I had to?
+}
+
+// -----------------------------------------------
+// `frame`'s mobile rules for manual application.
+// -----------------------------------------------
+@mixin mobile-full {
+	width: 90%;
+	margin-left: 5%;
+	margin-right: 5%;
+}
+
+
+// ---------------------------------------------------------------------------------------------
+// Assigns an element to the same number of grid columns in each breakpoint (except for mobile,
+// where everything is full width). It uses the `cols-width` mixin below, which can be called
+// manually if an element should be a different number of columns in different breakpoints.
+// ---------------------------------------------------------------------------------------------
+@mixin cols($num, $float: left) {
+
+	@include cols-width($num, $desktop-small-column-x, $float);
+
+	@media only screen and (min-width: $desktop-large-min) {
+		@include cols-width($num, $desktop-large-column-x, $float);
+	}
+
+	@media only screen and (max-width: $tablet-max) and (min-width: $tablet-min) {
+		@include cols-width($num, $tablet-column-x, $float);
+	}
+
+	@media only screen and (max-width: $mobile-large-max) {
+		width: auto;
+		margin-left: auto;
+		margin-right: auto;
+		float: none;
+	}
+}
+
+
+// ---------------------------------------------------------------------------------------------
+// The 'inner' designation refers to when you're already inside an element that's been used with
+// `cols`, or otherwise has the 10px horizontal margins applied. It removes margins from the
+// first and last elements, keeping the total width correct.
+// ---------------------------------------------------------------------------------------------
+@mixin cols-inner($num, $float: left) {
+	@include cols($num, $float);
+
+	&:first-child {
+		margin-left: 0px;
+	}
+
+	&:last-child {
+		margin-right: 0px;
+	}
+}
+
+
+// -----------------------------------------------------------------------------------------------
+// Used by `.cols` to calculate the widths for each breakpoint. The `$full-col` parameter is the
+// width of a full column before margins are subtracted, and by default it uses the column widths
+// derived in `sizes.less`.
+// -----------------------------------------------------------------------------------------------
+@mixin cols-width($num, $full-col, $float: left, $margin: 10px) {
+	$gutter: $margin * 2;
+	$col-width: $full-col - $gutter;
+
+	margin-left: $margin;
+	margin-right: $margin;
+	width: $num * $full-col - $gutter;
+	float: $float;
+}
+
+
+// ------------------------------------------------------------------------------------------------
+// Dark magic that takes a container of items and puts them side-by-side, evenly distributed across
+// the container's width, no matter how many elements there are.
+// ------------------------------------------------------------------------------------------------
+@mixin distribute-center($overflow: hidden, $offset-v: 1px) {
+	text-align: justify;
+	overflow: $overflow;
+
+	&:after {
+		content: '';
+		display: inline-block;
+		width: 100%;
+	}
+
+	&:before {
+		content: '';
+		display: block;
+		margin-top: -$offset-v + 1px;
+	}
+
+	> * {
+		display: inline-block;
+		margin-right: -0.25em;
+	//	position: relative;
+		margin-top: $offset-v - 2px;
+	}
+}
+
+
+// ----------------------------------------------------------------------------------------------
+// Gives you a sticky footer when you put it on the html element and set the `$footer-y` variable
+// correctly in `dimensions.scss`. But heed the warning on `clearer` below.
+//
+// Source: http://ryanfait.com/resources/footer-stick-to-bottom-of-page/
+// ----------------------------------------------------------------------------------------------
+@mixin sticky-footer($footer-y: $footer-y) {
+	&, body {
+		height: 100%;
+	}
+
+	#page-wrapper {
+		min-height: 100%;
+		height: auto !important;
+		height: 100%;
+		margin: 0 auto -$footer-y;
+	}
+
+	footer, #push {
+		height: $footer-y;
+	}
+
+	body.admin-menu {
+		margin-top: 0px !important;
+		padding-top: $admin-menu-y;
+	}
+
+	@media only screen and (max-width: $tablet-max) {
+		@include sticky-footer-cancel;
+	}
+}
+
+
+// -------------------------------------
+// Does exactly what it says on the tin.
+// -------------------------------------
+@mixin sticky-footer-cancel {
+	&, body {
+		height: auto;
+	}
+
+	#page-wrapper {
+		min-height: 0px;
+		height: auto !important;
+		margin: 0 auto;
+	}
+
+	footer, #push {
+		height: auto;
+	}
+
+	body.admin-menu {
+		padding-top: 29px;
+	}
+}
+
+
+// ---------------------------------------------------------------------------------------------
+// Can be applied to any element to make floats behave. Should also be your first suspect if you
+// have a problem getting your sticky footer to stick.
+// ---------------------------------------------------------------------------------------------
+@mixin clearer {
+	&:after {
+		content: ".";
+		display: block;
+		font-size: 0.1px;
+		line-height: 0px;
+		height: 0px;
+		clear: both;
+		visibility: hidden;
+	}
+}
+
+
+// -----------------
+// Self-explanatory.
+// -----------------
+@mixin clearer-cancel {
+	&:after {
+		content: none;
+	}
+}
+
+
+// -------------------------------------------------------
+// Can be applied to `<ul>`s and `<ol>`s to regain sanity.
+// -------------------------------------------------------
+@mixin list-reset {
+	display: block;
+	margin: 0px;
+	padding: 0px;
+	text-indent: 0px;
+	list-style: none;
+	list-style-type: none;
+	list-style-image: none;
+}
+
+
+// ----------------------
+// For image replacement.
+// ----------------------
+@mixin hide-text {
+	font-size: 0.1px;
+	text-indent: 100%;
+	text-align: left;
+	white-space: nowrap;
+	overflow: hidden;
+	display: block;
+}
+
+
+// ----------------------------------------------
+// Centered floats! What will they think of next?
+// ----------------------------------------------
+@mixin centered-menu($overflow: hidden) {
+	width: 100%;
+	overflow: $overflow; // Needs to be visible sometimes, as with dropdowns
+
+	> ul {
+		position: relative;
+		float: right;
+		right: 50%;
+
+		> li {
+			position: relative;
+			float: left;
+			left: 50%;
+		}
+	}
+}
+
+
+// -------------------------------------------------------------------------------------------------
+// The next three use absolute positioning and CSS transforms to absolutely center objects on one or
+// both axes. Should be used as a last resort.
+// -------------------------------------------------------------------------------------------------
+
+@mixin vertical-center {
+	position: absolute;
+	top: 50%;
+	bottom: auto;
+	transform: translateY(-50%);
+}
+
+@mixin horizontal-center {
+	position: absolute;
+	left: 50%;
+	right: auto;
+	transform: translateX(-50%);
+}
+
+@mixin all-center {
+	position: absolute;
+	top: 50%;
+	bottom: auto;
+	left: 50%;
+	right: auto;
+	transform: translate(-50%, -50%);
+}
+
+// --------------------------------------
+// Standard link-that-looks-like-a-button
+// --------------------------------------
+@mixin link-button(
+	$border-width:   2px,
+	$c:              white,
+	$bgc:            black,
+	$border-c:       white,
+	$hover-c:        white,
+	$hover-bgc:      black,
+	$hover-border-c: black
+) {
+	text-align: center;
+	display: inline-block;
+	font-weight: bold;
+	font-size: 16px;
+	padding: 8px 12px;
+
+	&, &:link, &:visited, &:hover, &:active {
+		color: $c;
+		background-color: $bgc;
+	//	background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5)), $color;
+		text-decoration: none;
+		border: $border-width solid $border-c;
+	}
+
+	&:hover, &:active {
+		color: $c;
+		background-color: $hover-bgc;
+		border-color: $hover-border-c;
+	}
+}
+
+@function empty($value) {
+	@if not $value
+		or $value == ""
+		or $value == 0
+		or $value == ()
+		or length($value) == 0
+	{
+		@return true;
+	}
+	@return false;
+}

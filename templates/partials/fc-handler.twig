@@ -1,0 +1,9 @@
+<section class="{{ layout|classes }}">
+	<div>
+		{% include 'partials/block-title.twig' %}
+
+		{% include "partials/blocks/#{set}/#{layout.acf_fc_layout|replace({'_': '-'})}.twig" ignore missing %}
+	</div>
+</section>
+
+{# <pre>{{ dump(layout.acf_fc_layout) }}</pre> #}

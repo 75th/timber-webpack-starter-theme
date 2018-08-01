@@ -1,0 +1,7 @@
+{% extends "base.twig" %}
+
+{% block content %}
+	{% for layout in post.get_field('page_content').content %}
+		{% include 'partials/fc-handler.twig' with { 'set': 'generic', 'layout': layout } %}
+	{% endfor %}
+{% endblock %}

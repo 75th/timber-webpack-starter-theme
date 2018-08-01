@@ -1,0 +1,73 @@
+@mixin social-menu {
+	> li {
+		display: inline-block;
+		vertical-align: middle;
+
+		> a {
+			@include hide-text;
+			display: block;
+			height: 25px;
+			background-image: url(../images/social.png);
+			background-repeat: no-repeat;
+			background-size: $social-total-x 50px;
+
+			&:link, &:visited, &:hover, &:active {
+				border-bottom: 0px none;
+			}
+		}
+
+		&.facebook > a {
+			width: $social-facebook-x;
+			background-position: $social-facebook-offset top;
+
+			&:hover {
+				background-position: $social-facebook-offset bottom;
+			}
+		}
+
+		&.twitter > a {
+			width: $social-twitter-x;
+			background-position: $social-twitter-offset top;
+
+			&:hover {
+				background-position: $social-twitter-offset bottom;
+			}
+		}
+
+		&.linkedin > a {
+			width: $social-linkedin-x;
+			background-position: $social-linkedin-offset top;
+
+			&:hover {
+				background-position: $social-linkedin-offset bottom;
+			}
+		}
+
+		&.youtube > a {
+			width: $social-youtube-x;
+			background-position: $social-youtube-offset top;
+
+			&:hover {
+				background-position: $social-youtube-offset bottom;
+			}
+		}
+
+		&.instagram > a {
+			width: $social-instagram-x;
+			background-position: $social-instagram-offset top;
+
+			&:hover {
+				background-position: $social-instagram-offset bottom;
+			}
+		}
+
+		&.rss > a {
+			width: $social-rss-x;
+			background-position: $social-rss-offset top;
+
+			&:hover {
+				background-position: $social-rss-offset bottom;
+			}
+		}
+	}
+}

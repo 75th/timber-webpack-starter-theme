@@ -1,0 +1,56 @@
+{% if posts.pagination.pages is not empty %}
+    <div class="pager">
+        <ul>
+            {% if pagination.pages|first and pagination.pages|first.current != true %}
+                <li>
+                    <a href="{{ pagination.pages|first.link }}">« Newest</a>
+                </li>
+            {% else %}
+                <li class="first btn disabled">
+                    <span>« Newest</span>
+                </li>
+            {% endif %}
+
+            {% if pagination.prev %}
+                <li>
+                    <a href="{{ pagination.prev.link }}">‹ Newer</a>
+                </li>
+            {% else %}
+                <li class="prev btn disabled">
+                    <span>‹ Newer</span>
+                </li>
+            {% endif %}
+
+            {% for page in pagination.pages %}
+                {% if page.link %}
+                    <li class="{{ page.class }}">
+                        <a href="{{ page.link }}">{{ page.title }}</a>
+                    </li>
+                {% elseif page.class == 'dots' %}
+                    <li class="ellipsis"><span>…</span></li>
+                {% else %}
+                    <li class="current {{ page.class }}">
+                        <span>{{ page.title }}</span>
+                    </li>
+                {% endif %}
+            {% endfor %}
+
+            {% if pagination.next %}
+                <li>
+                    <a href="{{ pagination.next.link }}">Older ›</a>
+                </li>
+            {% else %}
+                <li>
+                    <span>Older ›</span>
+                </li>
+            {% endif %}
+            {% if pagination.pages|last and pagination.pages|last.current != true %}
+                <li>
+                    <a href="{{ pagination.pages|last.link }}">Oldest »</a>
+                </li>
+            {% else %}
+                <li><span>Oldest »</span></li>
+            {% endif %}
+        </ul>
+    </div>
+{% endif %}

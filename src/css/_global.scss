@@ -1,0 +1,98 @@
+* {
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+}
+
+:first-child {
+	margin-top: 0px;
+}
+
+:last-child {
+	margin-bottom: 0px;
+}
+
+html, body {
+	margin: 0px;
+	padding: 0px;
+}
+
+html {
+	font-size: 18px;
+	line-height: 1.5;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+a {
+	&:link, &:visited, &:hover, &:active {
+
+	}
+
+	&:hover, &:active {
+
+	}
+
+	&[href^='javascript'] {
+
+	}
+}
+
+table {
+	width: 100%;
+
+	td, th {
+		padding: 3px;
+		vertical-align: middle;
+	}
+}
+
+
+h1, h2, h3 {
+
+}
+
+h1, h2, h3 {
+	a {
+		&:link, &:visited, &:hover, &:active {
+
+		}
+
+		&:hover, &:active {
+
+		}
+	}
+}
+
+img {
+	display: block;
+	max-width: 100%;
+	max-height: 100%;
+	height: auto;
+
+	&.alignleft {
+		float: left;
+		margin-right: 20px;
+		margin-bottom: 10px;
+	}
+}
+
+figure {
+	margin: 0px;
+
+	> a {
+		display: block;
+	}
+}
+
+#site-name img {
+	display: none;
+}
+
+.caps {
+	letter-spacing: 1px;
+}
+
+.frac {
+	font-feature-settings: 'frac';
+	font-variant-numeric: diagonal-fractions;
+}

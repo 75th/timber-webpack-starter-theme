@@ -1,0 +1,38 @@
+///////////////////
+// Media Queries //
+///////////////////
+
+// Large desktop only
+
+@media only screen and (min-width: $desktop-large-min) {
+
+}
+
+// Small desktop and lower
+
+@media only screen and (max-width: $desktop-small-max) {
+
+}
+
+// Tablet and higher
+@media only screen and (min-width: $tablet-min) {
+
+}
+
+// Tablet only
+
+@media only screen and (max-width: $tablet-max) and (min-width: $tablet-min) {
+
+}
+
+// Tablet and lower
+
+@media only screen and (max-width: $tablet-max) {
+
+}
+
+// All mobile
+
+@media only screen and (max-width: $mobile-large-max) {
+
+}
