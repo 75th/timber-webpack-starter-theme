@@ -1,4 +1,4 @@
-const { THEME_NAME } = require("../env.config");
+const { THEMENAME } = require("../env.config");
 const fs = require("fs-extra");
 const readline = require("readline");
 const fileHound = require("filehound");
@@ -23,9 +23,9 @@ async function addMainCss() {
   rl.on("line", line => {
     let regExp = /\Theme Name:/;
     if (regExp.exec(line) !== null && ENV == "development") {
-      modifiedData += `Theme Name: ${THEME_NAME}-DEV\n`;
+      modifiedData += `Theme Name: ${THEMENAME}-DEV\n`;
     } else if (regExp.exec(line) !== null && ENV == "production") {
-      modifiedData += `Theme Name: ${THEME_NAME}\n`;
+      modifiedData += `Theme Name: ${THEMENAME}\n`;
     } else {
       modifiedData += `${line}\n`;
     }

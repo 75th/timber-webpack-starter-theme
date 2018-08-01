@@ -1,4 +1,4 @@
-const { PATHS, HOST, PORT, THEME_NAME } = require("./env.config");
+const { PATHS, HOST, PORT, THEMENAME } = require("./env.config");
 const utils = require("./scripts/utils");
 const webpack = require("webpack");
 const path = require("path");
@@ -18,7 +18,7 @@ module.exports = {
 		publicPath:
 			ENV === "production"
 				? "/"
-				: `http://${HOST}:${PORT}/wp-content/themes/${THEME_NAME}/`,
+				: `http://${HOST}:${PORT}/wp-content/themes/${THEMENAME}/`,
 		filename: "js/[name].js",
 		sourceMapFilename: "[file].map"
 	},
